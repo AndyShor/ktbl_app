@@ -25,17 +25,25 @@
 
 <body translate="no" onload="connect()">
           <div class="btn__main">
+
+          <img src="assets/img/start.PNG">
+          <div class="btn" id="startBtn" onclick="connect()">Start recording</div>
+=======
           <img src="assets/img/start.png">
           <div class="btn" id="startBtn" onclick="start()">Start recording</div>
-          </div>  
-              <div class="btn__main">
-          <img src="assets/img/stop.png">
-          <div class="btn" id="startBtn" onclick="start()">Stop recording</div>
-          </div> 
+ 
   
-<script id="rendered-js" src="assets/js/script.js">
+
+<script> 
+    async function connect() {
+      const device = await navigator.bluetooth.requestDevice({
+          acceptAllDevices: true,
+      });
+    }
+
 </script>
 
 </body>
 
 </html>
+
