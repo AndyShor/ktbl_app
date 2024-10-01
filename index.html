@@ -25,11 +25,19 @@
 
 <body translate="no" >
           <div class="btn__main">
-
           
           <div class="btn" id="startBtn" onclick="connect()"><img src="assets/img/start.png"></div>
 
           </div>  
+
+          <div class="btn__main">
+          
+            <div class="btn" id="startBtn" onclick="connectToDevice()"><img src="assets/img/start.png"></div>
+  
+            </div>
+          
+          
+          
           <div class="btn__main">
           
           <div class="btn" id="stopBtn" ><img src="assets/img/stop.png"></div>
@@ -45,6 +53,51 @@
           acceptAllDevices: true,
       });
     }
+
+    
+
+    async function connectToDevice() {
+  // Request Bluetooth permission
+  if (!navigator.bluetooth) {
+    throw new Error('Web Bluetooth API is not supported');
+  }
+
+  try {
+    // Create a filter to search for devices with the specified name
+    const name = 'ktbl'
+    const filter = { name: name };
+
+    // Start scanning for devices
+    const device = await navigator.bluetooth.requestDevice(filter);
+
+    // Connect to the device
+    const server = await device.gatt.connect();
+
+    // Get the primary service
+    const service = await server.getPrimaryService('generic_access');
+
+    // Get the characteristic
+    const characteristic = await service.getCharacteristic('device_name');
+
+    // Read the characteristic value to verify the device name
+    const value = await characteristic.readValue();
+    const deviceName = new TextDecoder('utf-8').decode(value);
+
+    if (deviceName !== name) {
+      throw new Error('Device name mismatch');
+    }
+
+    console.log(`Connected to device: ${name}`);
+
+    return server;
+  } catch (error) {
+    console.error('Error connecting to device:', error);
+    return null;
+  }
+}
+
+
+
 
 </script>
 
