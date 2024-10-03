@@ -59,10 +59,19 @@
   try {
     // Create a filter to search for devices with the specified name
     const name = 'ktbl'
+    let options = {
+    filters: [
+     
+     { name: "ktbl" },
+          ],
+     
+    };
+
+
     const filter = { name: name };
 
     // Start scanning for devices
-    const device = await navigator.bluetooth.requestDevice(filter);
+    const device = await navigator.bluetooth.requestDevice(options);
 
     // Connect to the device
     const server = await device.gatt.connect();
