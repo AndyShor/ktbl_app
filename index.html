@@ -75,10 +75,10 @@
     const device = await navigator.bluetooth.requestDevice({
     filters: [
       {name: 'ktbl',
-      services: ['19b10010-e8f2-537e-4f6c-d104768a1214']
+      
       }
     ],
-    optionalServices: ['19b10010-e8f2-537e-4f6c-d104768a1214', '1800', '1801']
+    optionalServices: ['19b10010-e8f2-537e-4f6c-d104768a1214']
   });
 
     // Connect to the device
