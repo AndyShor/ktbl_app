@@ -71,7 +71,12 @@
     const filter = { name: name };
 
     // Start scanning for devices
-    const device = await navigator.bluetooth.requestDevice(options);
+    //const device = await navigator.bluetooth.requestDevice(options);
+    const device = await navigator.bluetooth.requestDevice({
+    filters: [
+      {name: "ktbl"}
+    ]
+  });
 
     // Connect to the device
     const server = await device.gatt.connect();
