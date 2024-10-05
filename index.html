@@ -88,7 +88,7 @@
     const service = await server.getPrimaryService('generic_access');
 
     // Get the characteristic
-    const characteristic = await service.getCharacteristic('device_name');
+    const characteristic = await service.getCharacteristic('Device Name');
 
     // Read the characteristic value to verify the device name
     const value = await characteristic.readValue();
