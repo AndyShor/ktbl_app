@@ -93,7 +93,7 @@
     // Read the characteristic value to verify the device name
     const value = await characteristic.readValue();
     const deviceName = new TextDecoder('utf-8').decode(value);
-    console.log(`Connected to device: ${value}`);
+    console.log(`Connected to device: ${deviceName}`);
 
     if (deviceName !== name) {
       throw new Error('Device name mismatch');
