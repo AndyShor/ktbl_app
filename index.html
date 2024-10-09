@@ -122,7 +122,7 @@
 
 function handleNotifications(event) {
   let payload = event.target.value;
-  let payload_size=payload.length;
+  let payload_size=payload.byteLength;
   if (payload.length !== 6) {
     console.log(`wrong payload size of : ${ payload_size} bytes`);
   }
