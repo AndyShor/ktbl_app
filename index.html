@@ -101,18 +101,21 @@
     }
 
     console.log(`Connected to device: ${name}`);
+  
+  const serviceUuid = '19b10010-e8f2-537e-4f6c-d104768a1214';
+  const characteristicUuid = '19b10011-e8f2-537e-4f6c-d104768a1214';
+  const mvmnt_service = await server.getPrimaryService(serviceUuid);
+  const mvmnt_characteristic = await mvmnt_service.getCharacteristic(characteristicUuid);
+  await mvmnt_characteristic.startNotifications();
+  console.log(`started notifications`);
+  mvmnt_characteristic.addEventListener('characteristicvaluechanged', handleNotifications);
 
     return server;
   } catch (error) {
     console.error('Error connecting to device:', error);
     return null;
   }
-  const serviceUuid = '19b10010-e8f2-537e-4f6c-d104768a1214';
-  const characteristicUuid = '19b10011-e8f2-537e-4f6c-d104768a1214';
-  const mvmnt_service = await server.getPrimaryService(serviceUuid);
-  const mvmnt_characteristic = await mvmnt_service.getCharacteristic(characteristicUuid);
-  await mvmnt_characteristic.startNotifications();
-  mvmnt_characteristic.addEventListener('characteristicvaluechanged', handleNotifications); 
+ 
 
 
 
