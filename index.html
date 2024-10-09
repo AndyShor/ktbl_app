@@ -44,7 +44,6 @@
           </div> 
 
  
-
   
 
 <script> 
@@ -123,7 +122,11 @@
 
 function handleNotifications(event) {
   let payload = event.target.value;
-  console.log(`received: ${payload}`);
+  if (payload.length !== 6) {
+    console.log(`wrong payload size of : ${payload.length} bytes`);
+  }
+  let gx_read = 1;
+  console.log(`received: ${payload.length}`);
 }
 
 
