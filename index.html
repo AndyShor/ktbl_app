@@ -40,14 +40,14 @@
           
           <div class="btn__main">
           
-          <div class="btn" id="stopBtn" ><img src="assets/img/stop.png"></div>
+          <div class="btn" id="stopBtn" onclick="connectToDevice()><img src="assets/img/stop.png"></div>
           </div> 
 
  
   
 
 <script> 
-        
+   var device;
 
     async function connectToDevice() {
   // Request Bluetooth permission
@@ -71,7 +71,7 @@
 
     // Start scanning for devices
     //const device = await navigator.bluetooth.requestDevice(options);
-    const device = await navigator.bluetooth.requestDevice({
+    device = await navigator.bluetooth.requestDevice({
     filters: [
       {name: 'ktbl',
       
@@ -128,6 +128,10 @@ function handleNotifications(event) {
   }
   let gx_read = 1;
   console.log(`received: ${payload.length}`);
+}
+
+function disconnect(){
+  device.gatt.disconnect();
 }
 
 
