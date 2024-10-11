@@ -128,8 +128,8 @@ function handleNotifications(event) {
   }
   
   let gx_read = 1;
-  console.log(`received: ${payload.byteLength}`);
-  console.log(`received: ${Array.from(payload)}`);
+  //console.log(`received: ${payload.byteLength}`);
+  console.log(`received: ${payload.getUint16(0)}`);
 }
 
 function disconnect(){
