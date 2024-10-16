@@ -24,11 +24,6 @@
 </head>
 
 <body translate="no" >
-          <div class="btn__main">
-          
-          <div class="btn" id="startBtn" onclick="connect()"><img src="assets/img/start.png"></div>
-
-          </div>  
 
           <div class="btn__main">
           
@@ -129,7 +124,7 @@ function handleNotifications(event) {
   
   let gx_read = 1;
   //console.log(`received: ${payload.byteLength}`);
-  console.log(`received: ${payload.getUint16(0)}`);
+  console.log(`received: ${payload.getUint16(0)/1000}`);
 }
 
 function disconnect(){
