@@ -130,7 +130,7 @@ function handleNotifications(event) {
   for (let i = 0; i <payload_size ; i++){
     //int16Values.push(view.getUint16(i*2, true));
     const byte = payload.getUint8(i);
-    console.log(`Byte ${i}: 0x${byte.toString(16).padStart(2, '0')}`);
+    console.log(`Byte ${i}: 0x${byte.toString(2).padStart(2, '0')}`);
 
     int8Values.push(view.getUint8(i));}
 
