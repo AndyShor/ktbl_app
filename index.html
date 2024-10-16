@@ -124,7 +124,12 @@ function handleNotifications(event) {
   
   let gx_read = 1;
   //console.log(`received: ${payload.byteLength}`);
-  console.log(`received: ${payload.getUint16(0)/1000}`);
+  const view = new DataView(payload.buffer);
+  const int16Values = [];
+  for (let i = 0; i <payload_size/2 ; i++){
+    int16Values.push(view.getUint16(i*2, true));}
+
+  console.log(`received: ${int16Values}`);
 }
 
 function disconnect(){
