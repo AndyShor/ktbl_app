@@ -43,9 +43,20 @@
 
 <script> 
    var device;
+   var gx_values=[];
+   var gy_values=[];
+   var gy_values=[];
+   var t_values=[];
 
     async function connectToDevice() {
-  // Request Bluetooth permission
+     // zero global data arrays from previous runs
+     gx_values=[];
+     gy_values=[];
+     gy_values=[];
+     t_values=[];
+
+  
+      // Request Bluetooth permission
   if (!navigator.bluetooth) {
     throw new Error('Web Bluetooth API is not supported');
   }
@@ -122,23 +133,30 @@ function handleNotifications(event) {
     console.log(`wrong payload size of : ${ payload_size} bytes`);
   }
   
-  let gx_read = 1;
+  
   //console.log(`received: ${payload.byteLength}`);
   const view = new DataView(payload.buffer);
-  const int16Values = [];
-  const int8Values = [];
-  for (let i = 0; i <payload_size/2 ; i++){
-    int16Values.push(view.getInt16(i*2, true));
+  //const int16Values = [];
+  gx_values.push(view.getInt16(0, true));
+  gy_values.push(view.getInt16(2, true));
+  gz_values.push(view.getInt16(4, true));
+  
+  //for (let i = 0; i <payload_size/2 ; i++){
+   // int16Values.push(view.getInt16(i*2, true));
+    
     //const byte = payload.getUint8(i);
     //console.log(`Byte ${i}: 0x${byte.toString(16).padStart(2, '0')}`);
 
     //int8Values.push(view.getUint8(i));
-  }
+  //}
 
-  console.log(`received: ${int16Values}`);
+  //console.log(`received: ${int16Values}`);
 }
 
 function disconnect(){
+  console.log(`received: ${gx_values}`);
+  console.log(`received: ${gy_values}`);
+  console.log(`received: ${gz_values}`);
   device.gatt.disconnect();
 }
 
