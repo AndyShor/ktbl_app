@@ -47,6 +47,7 @@
    var gy_values=[];
    var gz_values=[];
    var t_values=[];
+   var t_0=Date.now()/1000;
 
     async function connectToDevice() {
      // zero global data arrays from previous runs
@@ -129,6 +130,7 @@
 function handleNotifications(event) {
   let payload = event.target.value;
   let payload_size=payload.byteLength;
+  let t_now=Date.now()/1000;
   if (payload_size !== 24) {
     console.log(`wrong payload size of : ${ payload_size} bytes`);
   }
@@ -140,6 +142,7 @@ function handleNotifications(event) {
   gx_values.push(view.getInt16(0, true));
   gy_values.push(view.getInt16(2, true));
   gz_values.push(view.getInt16(4, true));
+  t_values.push(t_now-t_0);
   
   //for (let i = 0; i <payload_size/2 ; i++){
    // int16Values.push(view.getInt16(i*2, true));
@@ -157,6 +160,7 @@ function disconnect(){
   console.log(`received: ${gx_values}`);
   console.log(`received: ${gy_values}`);
   console.log(`received: ${gz_values}`);
+  console.log(`received: ${t_values}`);
   device.gatt.disconnect();
 }
 
