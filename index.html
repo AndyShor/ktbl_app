@@ -169,29 +169,32 @@ function handleNotifications(event) {
 }
 
 function plotGraph(xData, yData) {
-  // Create a new Bokeh plot
-  const plot = Bokeh.Plotting.figure({
-    title: 'Plot of x vs y',
-    x_axis_label: 'x',
-    y_axis_label: 'y',
-    plot_width: 600,
-    plot_height: 400
-  });
+        if (typeof Bokeh !== 'undefined' && Bokeh.Plotting && Bokeh.Plotting.figure) {
+          const plot = Bokeh.Plotting.figure({
+            title: 'Plot of x vs y',
+            x_axis_label: 'x',
+            y_axis_label: 'y',
+            plot_width: 600,
+            plot_height: 400
+          });
 
-  // Create a line glyph for the data
-  const line = Bokeh.Plotting.line({
-    x: xData,
-    y: yData,
-    line_width: 2,
-    line_color: 'blue'
-  });
+          const line = Bokeh.Plotting.line({
+            x: xData,
+            y: yData,
+            line_width: 2,
+            line_color: 'blue'
+          });
 
-  // Add the glyph to the plot
-  plot.add_glyph(line);
+          plot.add_glyph(line);
+          Bokeh.Plotting.show(plot);
+        } else {
+          console.error("Bokeh is not loaded yet.");
+        }
+      }
 
-  // Show the plot
-  Bokeh.Plotting.show(plot);
-}
+
+
+    
 
 function disconnect(){
   console.log(`received: ${gx_values}`);
