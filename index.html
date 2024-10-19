@@ -186,7 +186,7 @@ function plotGraph(xData, yData) {
           });
 
           plot.add_glyph(line);
-          Bokeh.Plotting.show(plot);
+          Bokeh.Plotting.show(plot,  document.getElementById('plot'));
         } else {
           console.error("Bokeh is not loaded yet.");
         }
