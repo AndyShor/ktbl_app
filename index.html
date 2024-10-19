@@ -47,10 +47,11 @@
    var gy_values=[];
    var gz_values=[];
    var t_values=[];
-   var t_0=Date.now()/1000;
+   var t_0=0;
 
     async function connectToDevice() {
      // zero global data arrays from previous runs
+     t_0=Date.now()/1000;
      gx_values=[];
      gy_values=[];
      gz_values=[];
