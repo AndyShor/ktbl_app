@@ -170,7 +170,7 @@ function handleNotifications(event) {
 
 function plotGraph(xData, yData) {
   // Create a new Bokeh plot
-  const plot = Plotting.figure({
+  const plot = Bokeh.Plotting.figure({
     title: 'Plot of x vs y',
     x_axis_label: 'x',
     y_axis_label: 'y',
@@ -179,7 +179,7 @@ function plotGraph(xData, yData) {
   });
 
   // Create a line glyph for the data
-  const line = Plotting.line({
+  const line = Bokeh.Plotting.line({
     x: xData,
     y: yData,
     line_width: 2,
