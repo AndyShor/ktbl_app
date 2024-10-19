@@ -19,6 +19,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
 
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.2.min.js"></script>
+   <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.2.min.js"></script>
+   <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.2.min.js"></script>
+   <script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.2.min.js"></script>
+   <script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.2.min.js"></script>
+   <script src="https://cdn.bokeh.org/bokeh/release/bokeh-runtime-2.4.2.min.js"></script>
+   <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-extra-2.4.2.min.js"></script>
+
 
 
 </head>
@@ -42,7 +50,10 @@
   
 
 <script> 
-   var device;
+  // define global variables 
+  import { Plotting } from '@bokeh/bokehjs'; 
+  
+  var device;
    var gx_values=[];
    var gy_values=[];
    var gz_values=[];
@@ -157,12 +168,40 @@ function handleNotifications(event) {
   //console.log(`received: ${int16Values}`);
 }
 
+function plotGraph(xData, yData) {
+  // Create a new Bokeh plot
+  const plot = Plotting.figure({
+    title: 'Plot of x vs y',
+    x_axis_label: 'x',
+    y_axis_label: 'y',
+    plot_width: 600,
+    plot_height: 400
+  });
+
+  // Create a line glyph for the data
+  const line = Plotting.line({
+    x: xData,
+    y: yData,
+    line_width: 2,
+    line_color: 'blue'
+  });
+
+  // Add the glyph to the plot
+  plot.add_glyph(line);
+
+  // Show the plot
+  Plotting.show(plot);
+}
+
 function disconnect(){
   console.log(`received: ${gx_values}`);
   console.log(`received: ${gy_values}`);
   console.log(`received: ${gz_values}`);
   console.log(`received: ${t_values}`);
   device.gatt.disconnect();
+  plotGraph(t_values, gx_values)
+
+
 }
 
 
