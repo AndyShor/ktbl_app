@@ -59,6 +59,7 @@
    var gz_values=[];
    var t_values=[];
    var t_0=0;
+   var tGf=[];
 
    //define variables for bokeh.js plot using guideline for 2.2.3 version 
    
@@ -72,7 +73,7 @@
     title: 'Example of random data',
     tools: "pan,wheel_zoom,box_zoom,reset,save",
     height: 300,
-    width: 300
+    width: 600
 });
 
 // add a line with data from the source
@@ -93,6 +94,7 @@ Bokeh.Plotting.show(plot);
      gy_values=[];
      gz_values=[];
      t_values=[];
+     tGf=[];
 
   
       // Request Bluetooth permission
@@ -172,55 +174,22 @@ function handleNotifications(event) {
   if (payload_size !== 24) {
     console.log(`wrong payload size of : ${ payload_size} bytes`);
   }
-  
-  
-  //console.log(`received: ${payload.byteLength}`);
+ 
   const view = new DataView(payload.buffer);
-  //const int16Values = [];
-  gx_values.push(view.getInt16(0, true));
-  gy_values.push(view.getInt16(2, true));
-  gz_values.push(view.getInt16(4, true));
+  const gx_read=view.getInt16(0, true)/1000;
+  const gy_read=view.getInt16(2, true)/1000;
+  const gz_read=view.getInt16(4, true)/1000;
+
+
+  gx_values.push(gx_read);
+  gy_values.push(gy_read);
+  gz_values.push(gz_read);
+  const tgf_read=Math.sqrt(gx_read ** 2 + gy_read ** 2 + gz_read ** 2)
+  tGf.push(tgf_read)
+
   t_values.push(t_now-t_0);
   
-  //for (let i = 0; i <payload_size/2 ; i++){
-   // int16Values.push(view.getInt16(i*2, true));
-    
-    //const byte = payload.getUint8(i);
-    //console.log(`Byte ${i}: 0x${byte.toString(16).padStart(2, '0')}`);
-
-    //int8Values.push(view.getUint8(i));
-  //}
-
-  //console.log(`received: ${int16Values}`);
 }
-
-function plotGraph(xData, yData) {
-        if (typeof Bokeh !== 'undefined' && Bokeh.Plotting && Bokeh.Plotting.figure) {
-          const plot = Bokeh.Plotting.figure({
-            title: 'Plot of x vs y',
-            x_axis_label: 'x',
-            y_axis_label: 'y',
-            plot_width: 600,
-            plot_height: 400
-          });
-
-          const line = Bokeh.Line({
-            x: xData,
-            y: yData,
-            line_width: 2,
-            line_color: 'blue'
-          });
-
-          plot.add_glyph(line);
-          Bokeh.Plotting.show(plot,  document.getElementById('plot'));
-        } else {
-          console.error("Bokeh is not loaded yet.");
-        }
-      }
-
-
-
-    
 
 function disconnect(){
   console.log(`received: ${gx_values}`);
@@ -229,12 +198,11 @@ function disconnect(){
   console.log(`received: ${t_values}`);
   device.gatt.disconnect();
   source.data.x=t_values;
-  source.data.y=gx_values;
+  source.data.y=tGf;
   source.change.emit();
 
-
-
 }
+
 
 
 </script>
