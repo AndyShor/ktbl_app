@@ -6,11 +6,11 @@
 
     <meta charset="UTF-8">
     <title>KTBL app</title>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.2.3.min.js"></script>
-<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.2.3.min.js"></script>
-<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.2.3.min.js"></script>
-<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-api-2.2.3.min.js"></script>
-<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-api-2.2.3.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.3.min.js"></script>
+<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.3.min.js"></script>
+<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.3.min.js"></script>
+<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-api-2.3.3.min.js"></script>
+<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-api-2.3.3.min.js"></script>
     
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -59,6 +59,32 @@
    var gz_values=[];
    var t_values=[];
    var t_0=0;
+
+   //define variables for bokeh.js plot using guideline for 2.2.3 version 
+   
+   // create a data source to hold data
+   var source = new Bokeh.ColumnDataSource({
+    data: { x: [], y: [] }
+    });
+
+  // make a plot with some tools
+    var plot = Bokeh.Plotting.figure({
+    title: 'Example of random data',
+    tools: "pan,wheel_zoom,box_zoom,reset,save",
+    height: 300,
+    width: 300
+});
+
+// add a line with data from the source
+plot.line({ field: "x" }, { field: "y" }, {
+    source: source,
+    line_width: 2
+});
+
+// show the plot, appending it to the end of the current section
+Bokeh.Plotting.show(plot);
+
+
 
     async function connectToDevice() {
      // zero global data arrays from previous runs
