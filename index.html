@@ -228,7 +228,10 @@ function disconnect(){
   console.log(`received: ${gz_values}`);
   console.log(`received: ${t_values}`);
   device.gatt.disconnect();
-  plotGraph(t_values, gx_values);
+  source.data.x=t_values;
+  source.data.y=gx_values;
+  source.change.emit();
+
 
 
 }
