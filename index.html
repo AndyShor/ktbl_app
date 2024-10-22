@@ -204,6 +204,23 @@ function disconnect(){
 
 }
 
+function saveToCSV(filename) {
+  const csvContent = `time, gx, gy, gz, tGf\n`  +
+  t_values.map((_, i) => `${t_values[i]},${gx_values[i]},${gy_values[i]},${gz_values[i]},${tGf[i]}`).join('\n');
+
+  const blob = new Blob([csvContent], { type: 'text/csv' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  link.click();
+}
+
+// Create the download button
+const downloadButton = document.createElement('button');
+downloadButton.textContent = 'Download CSV';
+downloadButton.onclick = () => {
+  saveToCSV('data.csv');
+};
 
 
 </script>
