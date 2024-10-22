@@ -72,8 +72,9 @@
     var plot = Bokeh.Plotting.figure({
     title: 'Example of random data',
     tools: "pan,wheel_zoom,box_zoom,reset,save",
+    sizing_mode: 'scale_width',
     height: 300,
-    width: 600
+    
 });
 
 // add a line with data from the source
