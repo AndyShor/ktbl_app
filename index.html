@@ -100,10 +100,9 @@ plot.line({ field: "x" }, { field: "y" }, {
 
 // show the plot, appending it to the end of the current section
 //Bokeh.Plotting.show(plot);
-//var plotJson = Bokeh.embed.components(plot);
-var plotJson = Bokeh.embed.embed_items(plot, {
-    target_id: "plot"
-});
+var plotJson = Bokeh.embed.components(plot);
+//var plotJson = Bokeh.embed.embed_items(plot, {    target_id: "plot" });
+Bokeh.embed.embed_item(plotJson[0], "plot");
 
 
 
