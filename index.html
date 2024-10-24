@@ -6,11 +6,8 @@
 
     <meta charset="UTF-8">
     <title>KTBL app</title>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.3.min.js"></script>
-<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.3.min.js"></script>
-<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.3.min.js"></script>
-<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-api-2.3.3.min.js"></script>
-<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-api-2.3.3.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-3.0.0.min.js"></script>
+
     
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -97,13 +94,13 @@ plot.line({ field: "x" }, { field: "y" }, {
     source: source,
     line_width: 2
 });
-var plotComponents = Bokeh.embed.components(plot);
-plotDiv.innerHTML = plotComponents[0];
+//var plotComponents = Bokeh.embed.components(plot);
+//plotDiv.innerHTML = plotComponents[0];
 // show the plot, appending it to the end of the current section
 //Bokeh.Plotting.show(plot);
 //var plotJson = Bokeh.embed.components(plot);
 //var plotJson = Bokeh.embed.embed_items(plot, {    target_id: "plot" });
-//Bokeh.embed.embed_item(plot, "plot");
+Bokeh.embed.embed_item(plot, plotDiv);
 
 
 
