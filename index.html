@@ -64,6 +64,19 @@
             <div id="plot" ><script src="./assets/js/bokeh_plot.js" style="padding: 0 100px width: 90%;"></script></div>
           </td>
         </tr>
+        <tr>
+          <td>
+             <div class="btn__main">
+               <div class="btn" id="downloadtBtn" onclick="saveToCSV('data.csv')"><img src="assets/img/download.png"></div>
+             </div>
+          </td>
+          <td>
+             <div class="btn__main">
+               <div class="btn" id="uploadBtn" onclick=""><img src="assets/img/upload.png"></div>
+             </div>
+           </td>
+        </tr>
+
         </table>
  
       </div>
@@ -211,14 +224,13 @@ function saveToCSV(filename) {
 }
 
 // Create the download button
-const downloadButton = document.createElement('button');
-downloadButton.textContent = 'Download CSV';
-downloadButton.onclick = () => {
-  saveToCSV('data.csv');
+//const downloadButton = document.createElement('button');
+//downloadButton.textContent = 'Download CSV';
+//downloadButton.onclick = () => {   saveToCSV('data.csv');
 };
 
 // Add the button to the page
-document.body.appendChild(downloadButton);
+//document.body.appendChild(downloadButton);
 
 
 </script>
