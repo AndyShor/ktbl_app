@@ -76,12 +76,12 @@
    //define variables for bokeh.js plot using guideline for 2.2.3 version 
    
    // create a data source to hold data
-   var source = new Bokeh.ColumnDataSource({
+   var source = new Bokeh.models.ColumnDataSource({
     data: { x: [], y: [] }
     });
 
   // make a plot with some tools
-    var plot = Bokeh.Plotting.figure({
+    var plot = Bokeh.Bokeh.Plotting.figure({
     title: 'Example of random data',
     tools: "pan,wheel_zoom,box_zoom,reset,save",
     sizing_mode: 'scale_width',
