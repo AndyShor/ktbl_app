@@ -5,8 +5,8 @@ var source = new Bokeh.ColumnDataSource({
 var plot = Bokeh.Plotting.figure({
     title: 'Example of random data',
     tools: "pan,wheel_zoom,box_zoom,reset,save",
-    height: 300,
     sizing_mode: 'scale_width',
+    height: 300
 });
 
 // add a line with data from the source
