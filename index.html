@@ -44,19 +44,20 @@
     <div class="row justify-content-center">
       <div class="col-md-8 col-lg-6 col-xl-6">
 
-
-          <div class="btn__main">
-          
-            <div class="btn" id="startBtn" onclick="connectToDevice()"><img src="assets/img/start.png"></div>
-  
-            </div>
-          
-          
-          
-          <div class="btn__main">
-          
-          <div class="btn" id="stopBtn" onclick="disconnect()"><img src="assets/img/stop.png"></div>
-          </div> 
+        <table>
+          <tr>
+            <td>
+               <div class="btn__main">
+                 <div class="btn" id="startBtn" onclick="connectToDevice()"><img src="assets/img/start.png"></div>
+               </div>
+            </td>
+            <td>
+               <div class="btn__main">
+                 <div class="btn" id="stopBtn" onclick="disconnect()"><img src="assets/img/stop.png"></div>
+               </div>
+             </td>
+          </tr>
+        </table>
           <div id="plot"></div>
 
  
@@ -73,6 +74,7 @@
    var t_values=[];
    var t_0=0;
    var tGf=[];
+   var plotDiv = document.getElementById("plot");
 
    //define variables for bokeh.js plot using guideline for 2.2.3 version 
    
@@ -97,7 +99,8 @@ plot.line({ field: "x" }, { field: "y" }, {
 });
 
 // show the plot, appending it to the end of the current section
-Bokeh.Plotting.show(plot);
+//Bokeh.Plotting.show(plot);
+Bokeh.embed.components(plot, plotDiv);
 
 
 
