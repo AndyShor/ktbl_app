@@ -7,6 +7,12 @@
     <meta charset="UTF-8">
     <title>KTBL app</title>
     <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-3.0.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.0.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.0.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.0.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-3.0.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-api-3.0.0.min.js"></script>
+
 
     
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
@@ -76,12 +82,12 @@
    //define variables for bokeh.js plot using guideline for 2.2.3 version 
    
    // create a data source to hold data
-   var source = new Bokeh.models.ColumnDataSource({
+   var source = new Bokeh.ColumnDataSource({
     data: { x: [], y: [] }
     });
 
   // make a plot with some tools
-    var plot = Bokeh.Bokeh.Plotting.figure({
+    var plot = new Bokeh.Plot({
     title: 'Example of random data',
     tools: "pan,wheel_zoom,box_zoom,reset,save",
     sizing_mode: 'scale_width',
@@ -90,17 +96,25 @@
 });
 
 // add a line with data from the source
-plot.line({ field: "x" }, { field: "y" }, {
-    source: source,
+// add a Line glyph
+const line = new Bokeh.Line({
+    x: { field: "x" },
+    y: { field: "y" },
+    line_color: "#666699",
     line_width: 2
 });
+
+plot.add_glyph(source, line);
+Bokeh.Plotting.show(plot);
+
+
 //var plotComponents = Bokeh.embed.components(plot);
 //plotDiv.innerHTML = plotComponents[0];
 // show the plot, appending it to the end of the current section
 //Bokeh.Plotting.show(plot);
 //var plotJson = Bokeh.embed.components(plot);
 //var plotJson = Bokeh.embed.embed_items(plot, {    target_id: "plot" });
-Bokeh.embed.embed_item(plot, plotDiv);
+//Bokeh.embed.embed_item(plot, plotDiv);
 
 
 
