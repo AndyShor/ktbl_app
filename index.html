@@ -6,12 +6,11 @@
 
     <meta charset="UTF-8">
     <title>KTBL app</title>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-3.0.0.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.0.0.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.0.0.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.0.0.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-3.0.0.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-api-3.0.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.3.min.js" integrity="sha384-dM3QQsP+wXdHg42wTqW85BjZQdLNNIXqlPw/BgKoExPmTG7ZLML4EGqLMfqHT6ON" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.3.min.js" integrity="sha384-3QTqdz9LyAm2i0sG5XTePsHec3UHWwVsrOL68SYRoAXsafvfAyqtQ+h440+qIBhS" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.3.min.js" integrity="sha384-8x57I4YuIfu8XyZfFo0XVr2WAT8EK4rh/uDe3wF7YuW2FNUSNEpJbsPaB1nJ2fz2" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-api-2.3.3.min.js" integrity="sha384-x30d2fhn8lUZ7L7yQdMJ5qVDAz1mwydugGxJqGpvMvFcYplj2Yx3JFrrqps6J/5z" crossorigin="anonymous"></script>
+    
 
 
     
@@ -61,7 +60,7 @@
              </td>
           </tr>
         </table>
-          <div id="plot"></div>
+          <div id="plot"><script src="./bokeh_plot.js" style="padding: 0 100px width: 100%;"></script></div>
 
  
   
@@ -77,45 +76,7 @@
    var t_values=[];
    var t_0=0;
    var tGf=[];
-   var plotDiv = document.getElementById("plot");
-
-   //define variables for bokeh.js plot using guideline for 2.2.3 version 
    
-   // create a data source to hold data
-   var source = new Bokeh.ColumnDataSource({
-    data: { x: [0,10], y: [1,1] }
-    });
-
-  // make a plot with some tools
-    var plot = new Bokeh.Plot({
-    title: 'Example of random data',
-    sizing_mode: 'scale_width',
-    height: 300,
-    
-});
-
-// add a line with data from the source
-// add a Line glyph
-const line = new Bokeh.Line({
-    x: { field: "x" },
-    y: { field: "y" },
-    line_color: "#666699",
-    line_width: 2
-});
-
-plot.add_glyph(source, line);
-Bokeh.Plotting.show(plot);
-
-
-//var plotComponents = Bokeh.embed.components(plot);
-//plotDiv.innerHTML = plotComponents[0];
-// show the plot, appending it to the end of the current section
-//Bokeh.Plotting.show(plot);
-//var plotJson = Bokeh.embed.components(plot);
-//var plotJson = Bokeh.embed.embed_items(plot, {    target_id: "plot" });
-//Bokeh.embed.embed_item(plot, plotDiv);
-
-
 
     async function connectToDevice() {
      // zero global data arrays from previous runs
