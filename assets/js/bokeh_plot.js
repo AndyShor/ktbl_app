@@ -15,4 +15,4 @@ plot.line({ field: "x" }, { field: "y" }, {
     line_width: 2
 });
 
-Bokeh.Plotting.show(plot);
+Bokeh.Plotting.show(plot, document.getElementById("plot"));
