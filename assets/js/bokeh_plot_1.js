@@ -3,7 +3,7 @@ var source = new Bokeh.ColumnDataSource({
 });
 
 var plot = Bokeh.Plotting.figure({
-    title: 'Example of random data',
+    title: 'raw data',
     tools: "pan,wheel_zoom,box_zoom,reset,save",
     sizing_mode: 'scale_width',
     height: 300
@@ -15,4 +15,4 @@ plot.line({ field: "x" }, { field: "y" }, {
     line_width: 2
 });
 
-Bokeh.Plotting.show(plot, document.getElementById("plot"));
+Bokeh.Plotting.show(plot, document.getElementById("plot_1"));
