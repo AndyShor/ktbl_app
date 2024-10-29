@@ -11,7 +11,7 @@ var plot_1 = Bokeh.Plotting.figure({
 
 // add a line with data from the source
 plot_1.line({ field: "x" }, { field: "y" }, {
-    source: source,
+    source: source_1,
     line_width: 2
 });
 
