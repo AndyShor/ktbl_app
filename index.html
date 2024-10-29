@@ -211,9 +211,9 @@ function disconnect(){
   console.log(`received: ${gz_values}`);
   console.log(`received: ${t_values}`);
   device.gatt.disconnect();
-  source.data.x=t_values;
-  source.data.y=tGf;
-  source.change.emit();
+  source_1.data.x=t_values;
+  source_1.data.y=tGf;
+  source_1.change.emit();
 
 }
 
