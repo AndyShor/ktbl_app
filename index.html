@@ -228,13 +228,51 @@ function saveToCSV(filename) {
   link.click();
 }
 
-// Create the download button
-//const downloadButton = document.createElement('button');
-//downloadButton.textContent = 'Download CSV';
-//downloadButton.onclick = () => {   saveToCSV('data.csv');};
+async function sendData() {
+  try {
+    // Define the API endpoint URL
+    const apiUrl = 'https://example.com/api/endpoint';
 
-// Add the button to the page
-//document.body.appendChild(downloadButton);
+    // Define the 3 named arrays
+    const t_values = [];
+    const gy_values = [];
+    const gz_values = [];
+
+    // Create a JSON payload with the 3 named arrays
+    const payload = {
+      t_values: t_values,
+      gy_values: gy_values,
+      gz_values: gz_values
+    };
+
+    // Make a POST request to the API endpoint with the JSON payload
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    // Get the response data as JSON
+    const data = await response.json();
+
+    // Save the response data into new named arrays
+    const t_rel = data.t_rel;
+    const f_1 = data.f_1;
+    const f_2 = data.f_2;
+    const f_3 = data.f_3;
+
+    // Log the updated arrays to the console
+    console.log('Response arrays:');
+    console.log(t_rel);
+    console.log(f_1);
+    console.log(f_2);
+    console.log(f_3);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
 
 
 </script>
