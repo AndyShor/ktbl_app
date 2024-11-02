@@ -259,6 +259,7 @@ async function sendData() {
     const f_1 = data.f_1;
     const f_2 = data.f_2;
     const f_3 = data.f_3;
+    const features=data.features;
 
     // Log the updated arrays to the console
     console.log('Response arrays:');
@@ -266,6 +267,7 @@ async function sendData() {
     console.log(f_1);
     console.log(f_2);
     console.log(f_3);
+    console.log(features);
     source_2.data.x=t_rel;
     source_2.data.y=f_1;
     source_2.change.emit();
