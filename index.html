@@ -219,7 +219,7 @@ function disconnect(){
 
 function saveToCSV(filename) {
   const csvContent = `time, gx, gy, gz, tGf\n`  +
-  t_values.map((_, i) => `${t_values[i]},${gx_values[i]},${gy_values[i]},${gz_values[i]},${tGf[i]}`).join('\n');
+  t_values.map((_, i) => `${t_values[i]},${gy_values[i]},${gx_values[i]},${gz_values[i]},${tGf[i]}`).join('\n');
 
   const blob = new Blob([csvContent], { type: 'text/csv' });
   const link = document.createElement('a');
@@ -238,7 +238,7 @@ async function sendData() {
     // Create a JSON payload with the 3 named arrays
     const payload = {
       t_values: t_values,
-      gy_values: gy_values,
+      gy_values: gx_values,
       gz_values: gz_values
     };
 
