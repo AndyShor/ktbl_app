@@ -76,9 +76,10 @@
              </div>
            </td>
         </tr>
+        
         <tr>
           <td colspan="2">
-            <div id="plot_2" ><script src="./assets/js/bokeh_plot_2.js" style="padding: 0 100px width: 90%;"></script></div>
+            <div id="summary" ></div>
           </td>
         </tr>
 
@@ -268,6 +269,32 @@ async function sendData() {
     console.log(f_2);
     console.log(f_3);
     console.log(features);
+
+    if (features.length > 0) {
+      const typeCounts = {};
+      features.forEach((feature) => {
+        if (typeCounts[feature.type]) {
+          typeCounts[feature.type]++;
+        } else {
+          typeCounts[feature.type] = 1;
+        }
+      });
+
+      // Create the summary string
+      const summaryString = "Workout summary: ";
+      Object.keys(typeCounts).forEach((typeValue) => {
+        summaryString += `${typeValue}: ${typeCounts[typeValue]}, `;
+      });
+      const finalSummaryString = summaryString.slice(0, -2);
+
+      // Print the summary in the webpage
+      console.log(finalSummaryString);
+      document.getElementById("summary").innerHTML = finalSummaryString;
+    }
+
+
+
+
     source_2.data.x=t_rel;
     source_2.data.y=f_1;
     source_2.data.y_1=f_2;
