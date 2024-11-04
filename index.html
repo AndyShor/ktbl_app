@@ -76,8 +76,7 @@
              </div>
            </td>
         </tr>
-        
-        <tr>
+         <tr>
           <td colspan="2">
             <div id="plot_2" ><script src="./assets/js/bokeh_plot_2.js" style="padding: 0 100px width: 90%;"></script></div>
           </td>
@@ -276,6 +275,12 @@ async function sendData() {
     console.log(f_3);
     console.log(features);
 
+    source_2.data.x=t_rel;
+    source_2.data.y=f_1;
+    source_2.data.y_1=f_2;
+    source_2.data.y_2=f_3;
+    source_2.change.emit();
+
     if (features.length > 0) {
       const typeCounts = {};
       features.forEach((feature) => {
@@ -287,7 +292,7 @@ async function sendData() {
       });
 
       // Create the summary string
-      const summaryString = "Workout summary: ";
+      let summaryString = "Workout summary: ";
       Object.keys(typeCounts).forEach((typeValue) => {
         summaryString += `${typeValue}: ${typeCounts[typeValue]}, `;
       });
@@ -301,11 +306,7 @@ async function sendData() {
 
 
 
-    source_2.data.x=t_rel;
-    source_2.data.y=f_1;
-    source_2.data.y_1=f_2;
-    source_2.data.y_2=f_3;
-    source_2.change.emit();
+  
   } catch (error) {
     console.error('Error:', error);
   }
