@@ -1,5 +1,5 @@
 var source_2 = new Bokeh.ColumnDataSource({
-    data: { x: [], y: [] }
+    data: { x: [], y: [] , y_1:[], y_2:[] }
 });
 
 var plot_2 = Bokeh.Plotting.figure({
@@ -12,6 +12,16 @@ var plot_2 = Bokeh.Plotting.figure({
 // add a line with data from the source
 plot_2.line({ field: "x" }, { field: "y" }, {
     source: source_2,
+    line_width: 2
+});
+
+plot_2.line({ field: "x" }, { field: "y_1" }, {
+    source: source_2,
+    line_width: 2   
+}); 
+
+plot_2.line({ field: "x" }, { field: "y_2" }, {
+    source: source_2,   
     line_width: 2
 });
 

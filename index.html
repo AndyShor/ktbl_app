@@ -270,6 +270,8 @@ async function sendData() {
     console.log(features);
     source_2.data.x=t_rel;
     source_2.data.y=f_1;
+    source_2.data.y_1=f_2;
+    source_2.data.y_2=f_3;
     source_2.change.emit();
   } catch (error) {
     console.error('Error:', error);
