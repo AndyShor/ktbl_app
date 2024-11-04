@@ -12,17 +12,20 @@ var plot_2 = Bokeh.Plotting.figure({
 // add a line with data from the source
 plot_2.line({ field: "x" }, { field: "y" }, {
     source: source_2,
-    line_width: 2
+    line_width: 2,
+    color: "red"
 });
 
 plot_2.line({ field: "x" }, { field: "y_1" }, {
     source: source_2,
-    line_width: 2   
+    line_width: 2,
+    color: "blue"   
 }); 
 
 plot_2.line({ field: "x" }, { field: "y_2" }, {
     source: source_2,   
-    line_width: 2
+    line_width: 2,
+    color: "green"
 });
 
 Bokeh.Plotting.show(plot_2, document.getElementById("plot_2"));
