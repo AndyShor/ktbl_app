@@ -1,338 +1,493 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-    <title>KTBL app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KTBL Workout Tracker</title>
+    
+    <!-- Bokeh Libraries -->
     <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.3.min.js" integrity="sha384-dM3QQsP+wXdHg42wTqW85BjZQdLNNIXqlPw/BgKoExPmTG7ZLML4EGqLMfqHT6ON" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.3.min.js" integrity="sha384-3QTqdz9LyAm2i0sG5XTePsHec3UHWwVsrOL68SYRoAXsafvfAyqtQ+h440+qIBhS" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.3.min.js" integrity="sha384-8x57I4YuIfu8XyZfFo0XVr2WAT8EK4rh/uDe3wF7YuW2FNUSNEpJbsPaB1nJ2fz2" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-api-2.3.3.min.js" integrity="sha384-x30d2fhn8lUZ7L7yQdMJ5qVDAz1mwydugGxJqGpvMvFcYplj2Yx3JFrrqps6J/5z" crossorigin="anonymous"></script>
-    <link rel="icon" type="image/png" href="./favicon.png">
-
-
     
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <script src="https://kit.fontawesome.com/f0601b0fb2.js" crossorigin="anonymous"></script>
-    <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
-    <script nomodule='' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-
-    <!-- Import Bootstrap CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
-<!-- Import Bootstrap JavaScript -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-<link rel="manifest" href="manifest.json">
-
-
-
-   
-
-
+    
+    <!-- PWA -->
+    <link rel="icon" type="image/png" href="./favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="app-title">
+                    <img src="kettlebell-icon.svg" alt="Kettlebell" class="kettlebell-icon">
 
-<body translate="no" >
-  <div class="container-fluid">
-    <div class="row justify-content-center">
-      <div class="col-md-12 col-lg-8 col-xl-6">
+                    KTBL Tracker
+                </h1>
+                <div class="connection-status" id="connectionStatus">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Disconnected</span>
+                </div>
+            </div>
+        </header>
 
-        <table>
-          <tr>
-            <td>
-               <div class="btn__main">
-                 <div class="btn" id="startBtn" onclick="connectToDevice()"><img src="assets/img/start.png"></div>
-               </div>
-            </td>
-            <td>
-               <div class="btn__main">
-                 <div class="btn" id="stopBtn" onclick="disconnect()"><img src="assets/img/stop.png"></div>
-               </div>
-             </td>
-          </tr>
-        <tr>
-          <td colspan="2">
-            <div id="plot_1" ><script src="./assets/js/bokeh_plot_1.js" style="padding: 0 100px width: 90%;"></script></div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-             <div class="btn__main">
-               <div class="btn" id="downloadtBtn" onclick="saveToCSV('data.csv')"><img src="assets/img/download.png"></div>
-             </div>
-          </td>
-          <td>
-             <div class="btn__main">
-               <div class="btn" id="uploadBtn" onclick="sendData()"><img src="assets/img/upload.png"></div>
-             </div>
-           </td>
-        </tr>
-         <tr>
-          <td colspan="2">
-            <div id="plot_2" ><script src="./assets/js/bokeh_plot_2.js" style="padding: 0 100px width: 90%;"></script></div>
-          </td>
-        </tr>
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Control Panel Card -->
+            <div class="card control-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="material-icons">bluetooth</span>
+                        Device Control
+                    </h2>
+                </div>
+                <div class="card-content">
+                    <div class="button-grid">
+                        <button class="btn btn-primary btn-large" id="startBtn" onclick="connectToDevice()">
+                            <span class="material-icons">play_arrow</span>
+                            <span>Start Recording</span>
+                        </button>
+                        <button class="btn btn-danger btn-large" id="stopBtn" onclick="disconnect()" disabled>
+                            <span class="material-icons">stop</span>
+                            <span>Stop Recording</span>
+                        </button>
+                    </div>
+                    <div class="recording-indicator" id="recordingIndicator" style="display: none;">
+                        <div class="pulse-dot"></div>
+                        <span>Recording in progress...</span>
+                    </div>
+                </div>
+            </div>
 
-        <tr>
-          <td colspan="2">
-            <div id="summary" ></div>
-          </td>
-        </tr>
+            <!-- Raw Data Card -->
+            <div class="card chart-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="material-icons">show_chart</span>
+                        Raw Data Stream
+                    </h2>
+                </div>
+                <div class="card-content">
+                    <div id="plot_1" class="plot-container">
+                        <script src="./assets/js/bokeh_plot_1.js"></script>
+                    </div>
+                </div>
+            </div>
 
-        </table>
- 
-      </div>
+            <!-- Data Actions Card -->
+            <div class="card action-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="material-icons">analytics</span>
+                        Data Actions
+                    </h2>
+                </div>
+                <div class="card-content">
+                    <div class="button-grid">
+                        <button class="btn btn-secondary" id="downloadBtn" onclick="saveToCSV('data.csv')" disabled>
+                            <span class="material-icons">download</span>
+                            <span>Download CSV</span>
+                        </button>
+                        <button class="btn btn-accent" id="uploadBtn" onclick="sendData()" disabled>
+                            <span class="material-icons">cloud_upload</span>
+                            <span>Analyze Data</span>
+                        </button>
+                    </div>
+                    <div class="loading-indicator" id="loadingIndicator" style="display: none;">
+                        <div class="spinner"></div>
+                        <span>Analyzing workout...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Results Card -->
+            <div class="card chart-card" id="analysisCard" style="display: none;">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="material-icons">insights</span>
+                        Analysis Results
+                    </h2>
+                </div>
+                <div class="card-content">
+                    <div id="plot_2" class="plot-container">
+                        <script src="./assets/js/bokeh_plot_2.js"></script>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workout Summary Card -->
+            <div class="card summary-card" id="summaryCard" style="display: none;">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="material-icons">receipt_long</span>
+                        Workout Summary
+                    </h2>
+                </div>
+                <div class="card-content">
+                    <div id="summary" class="summary-content"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Toast Notification -->
+        <div class="toast" id="toast">
+            <span class="toast-icon material-icons"></span>
+            <span class="toast-message"></span>
+        </div>
     </div>
-  </div>
 
-<script> 
-  // define global variables 
+    <script>
+        // ==================== GLOBAL VARIABLES ====================
+        var device;
+        var gx_values = [];
+        var gy_values = [];
+        var gz_values = [];
+        var t_values = [];
+        var t_0 = 0;
+        var tGf = [];
 
-  
-  var device;
-   var gx_values=[];
-   var gy_values=[];
-   var gz_values=[];
-   var t_values=[];
-   var t_0=0;
-   var tGf=[];
-   
-
-    async function connectToDevice() {
-     // zero global data arrays from previous runs
-     t_0=Date.now()/1000;
-     gx_values=[];
-     gy_values=[];
-     gz_values=[];
-     t_values=[];
-     tGf=[];
-
-  
-      // Request Bluetooth permission
-  if (!navigator.bluetooth) {
-    throw new Error('Web Bluetooth API is not supported');
-  }
-
-  try {
-    // Create a filter to search for devices with the specified name
-    const name = 'ktbl'
-    let options = {
-    filters: [
-     
-     { name: "ktbl" },
-          ],
-     
-    };
-
-
-    const filter = { name: name };
-
-    // Start scanning for devices
-    //const device = await navigator.bluetooth.requestDevice(options);
-    device = await navigator.bluetooth.requestDevice({
-    filters: [
-      {name: 'ktbl',
-      
-      }
-    ],
-    optionalServices: ['19b10010-e8f2-537e-4f6c-d104768a1214', '00001800-0000-1000-8000-00805f9b34fb']
-  });
-
-    // Connect to the device
-    const server = await device.gatt.connect();
-
-    // Get the primary service
-    const service = await server.getPrimaryService('generic_access');
-
-    // Get the characteristic
-    const characteristic = await service.getCharacteristic('00002a00-0000-1000-8000-00805f9b34fb');
-
-    // Read the characteristic value to verify the device name
-    const value = await characteristic.readValue();
-    const deviceName = new TextDecoder('utf-8').decode(value);
-    console.log(`Connected to device: ${deviceName}`);
-
-    if (deviceName !== name) {
-      //throw new Error('Device name mismatch');
-      console.log(`Connected to device with different name  ${deviceName}`);
-    }
-
-    console.log(`Connected to device: ${name}`);
-  
-  const serviceUuid = '19b10010-e8f2-537e-4f6c-d104768a1214';
-  const characteristicUuid = '19b10011-e8f2-537e-4f6c-d104768a1214';
-  const mvmnt_service = await server.getPrimaryService(serviceUuid);
-  const mvmnt_characteristic = await mvmnt_service.getCharacteristic(characteristicUuid);
-  await mvmnt_characteristic.startNotifications();
-  console.log(`started notifications`);
-  mvmnt_characteristic.addEventListener('characteristicvaluechanged', handleNotifications);
-
-    return server;
-  } catch (error) {
-    console.error('Error connecting to device:', error);
-    return null;
-  }
- 
-
-
-
-}
-
-function handleNotifications(event) {
-  let payload = event.target.value;
-  let payload_size=payload.byteLength;
-  let t_now=Date.now()/1000;
-  if (payload_size !== 24) {
-    console.log(`wrong payload size of : ${ payload_size} bytes`);
-  }
- 
-  const view = new DataView(payload.buffer);
-  const gx_read=view.getInt16(0, true)/1000;
-  const gy_read=view.getInt16(2, true)/1000;
-  const gz_read=view.getInt16(4, true)/1000;
-
-
-  gx_values.push(gx_read);
-  gy_values.push(gy_read);
-  gz_values.push(gz_read);
-  const tgf_read=Math.sqrt(gx_read ** 2 + gy_read ** 2 + gz_read ** 2)
-  tGf.push(tgf_read)
-
-  t_values.push(t_now-t_0);
-  
-}
-
-function disconnect(){
-  console.log(`received: ${gx_values}`);
-  console.log(`received: ${gy_values}`);
-  console.log(`received: ${gz_values}`);
-  console.log(`received: ${t_values}`);
-  device.gatt.disconnect();
-  source_1.data.x=t_values;
-  source_1.data.y=tGf;
-  source_1.change.emit();
-
-}
-
-function saveToCSV(filename) {
-  const csvContent = `time, gx, gy, gz, tGf\n`  +
-  t_values.map((_, i) => `${t_values[i]},${gy_values[i]},${gx_values[i]},${gz_values[i]},${tGf[i]}`).join('\n');
-
-  const blob = new Blob([csvContent], { type: 'text/csv' });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = filename;
-  link.click();
-}
-
-async function sendData() {
-  try {
-    // Define the API endpoint URL
-    //const apiUrl = 'https://yuzh4eyil4.execute-api.us-east-1.amazonaws.com/prod';
-    const apiUrl = 'https://nj8zq5nvl6.execute-api.us-east-1.amazonaws.com/prod';
-
-
-
-    // Create a JSON payload with the 3 named arrays
-    const payload = {
-      t_values: t_values,
-      gy_values: gx_values,
-      gz_values: gz_values
-    };
-
-    // Make a POST request to the API endpoint with the JSON payload
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    });
-
-    // Get the response data as JSON
-    const data = await response.json();
-
-    // Save the response data into new named arrays
-    const t_rel = data.t_rel;
-    const f_1 = data.f_1;
-    const f_2 = data.f_2;
-    const f_3 = data.f_3;
-    const features=data.features;
-
-    // Log the updated arrays to the console
-    console.log('Response arrays:');
-    console.log(t_rel);
-    console.log(f_1);
-    console.log(f_2);
-    console.log(f_3);
-    console.log(features);
-
-    source_2.data.x=t_rel;
-    source_2.data.y=f_1;
-    source_2.data.y_1=f_2;
-    source_2.data.y_2=f_3;
-    source_2.change.emit();
-
-    if (features.length > 0) {
-      const typeCounts = {};
-      features.forEach((feature) => {
-        if (typeCounts[feature.type]) {
-          typeCounts[feature.type]++;
-        } else {
-          typeCounts[feature.type] = 1;
+        // ==================== UI HELPER FUNCTIONS ====================
+        function updateConnectionStatus(connected) {
+            const statusEl = document.getElementById('connectionStatus');
+            const statusDot = statusEl.querySelector('.status-dot');
+            const statusText = statusEl.querySelector('.status-text');
+            
+            if (connected) {
+                statusDot.classList.add('connected');
+                statusText.textContent = 'Connected';
+                statusEl.classList.add('connected');
+            } else {
+                statusDot.classList.remove('connected');
+                statusText.textContent = 'Disconnected';
+                statusEl.classList.remove('connected');
+            }
         }
-      });
 
-      // Create the summary string
-      let summaryString = "Workout summary: ";
-      Object.keys(typeCounts).forEach((typeValue) => {
-        summaryString += `${typeValue}: ${typeCounts[typeValue]}, `;
-      });
-      const finalSummaryString = summaryString.slice(0, -2);
+        function updateButtonStates(isRecording) {
+            const startBtn = document.getElementById('startBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const recordingIndicator = document.getElementById('recordingIndicator');
 
-      // Print the summary in the webpage
-      console.log(finalSummaryString);
-      document.getElementById("summary").innerHTML = finalSummaryString;
-    }
+            if (isRecording) {
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+                downloadBtn.disabled = true;
+                uploadBtn.disabled = true;
+                recordingIndicator.style.display = 'flex';
+            } else {
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+                recordingIndicator.style.display = 'none';
+                
+                // Enable download/upload only if we have data
+                if (t_values.length > 0) {
+                    downloadBtn.disabled = false;
+                    uploadBtn.disabled = false;
+                }
+            }
+        }
 
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const icon = toast.querySelector('.toast-icon');
+            const messageEl = toast.querySelector('.toast-message');
+            
+            // Set icon based on type
+            const icons = {
+                'success': 'check_circle',
+                'error': 'error',
+                'info': 'info',
+                'warning': 'warning'
+            };
+            
+            icon.textContent = icons[type] || icons.info;
+            messageEl.textContent = message;
+            
+            // Remove any existing type classes
+            toast.classList.remove('toast-success', 'toast-error', 'toast-info', 'toast-warning');
+            toast.classList.add(`toast-${type}`);
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
 
+        // ==================== BLUETOOTH FUNCTIONS ====================
+        async function connectToDevice() {
+            // Zero global data arrays from previous runs
+            t_0 = Date.now() / 1000;
+            gx_values = [];
+            gy_values = [];
+            gz_values = [];
+            t_values = [];
+            tGf = [];
 
+            // Check for Web Bluetooth API support
+            if (!navigator.bluetooth) {
+                showToast('Web Bluetooth is not supported on this device', 'error');
+                throw new Error('Web Bluetooth API is not supported');
+            }
 
-  
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
+            try {
+                showToast('Searching for KTBL device...', 'info');
+                
+                // Request device
+                device = await navigator.bluetooth.requestDevice({
+                    filters: [{ name: 'ktbl' }],
+                    optionalServices: ['19b10010-e8f2-537e-4f6c-d104768a1214', '00001800-0000-1000-8000-00805f9b34fb']
+                });
 
+                // Connect to the device
+                const server = await device.gatt.connect();
 
-</script>
+                // Get the primary service
+                const service = await server.getPrimaryService('generic_access');
 
-<script>
-  // Register the service worker
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-      .then(registration => {
-        console.log('Service worker registered:', registration);
-      })
-      .catch(error => {
-        console.error('Service worker registration failed:', error);
-      });
-  }
-</script>
+                // Get the characteristic
+                const characteristic = await service.getCharacteristic('00002a00-0000-1000-8000-00805f9b34fb');
 
+                // Read the characteristic value to verify the device name
+                const value = await characteristic.readValue();
+                const deviceName = new TextDecoder('utf-8').decode(value);
+                console.log(`Connected to device: ${deviceName}`);
 
+                if (deviceName !== 'ktbl') {
+                    console.log(`Connected to device with different name ${deviceName}`);
+                }
+
+                // Get movement service and start notifications
+                const serviceUuid = '19b10010-e8f2-537e-4f6c-d104768a1214';
+                const characteristicUuid = '19b10011-e8f2-537e-4f6c-d104768a1214';
+                const mvmnt_service = await server.getPrimaryService(serviceUuid);
+                const mvmnt_characteristic = await mvmnt_service.getCharacteristic(characteristicUuid);
+                await mvmnt_characteristic.startNotifications();
+                console.log('Started notifications');
+                
+                mvmnt_characteristic.addEventListener('characteristicvaluechanged', handleNotifications);
+
+                // Update UI
+                updateConnectionStatus(true);
+                updateButtonStates(true);
+                showToast('Connected! Recording started', 'success');
+
+                // Handle disconnection
+                device.addEventListener('gattserverdisconnected', onDisconnected);
+
+                return server;
+            } catch (error) {
+                console.error('Error connecting to device:', error);
+                showToast('Failed to connect to device', 'error');
+                updateConnectionStatus(false);
+                updateButtonStates(false);
+                return null;
+            }
+        }
+
+        function handleNotifications(event) {
+            let payload = event.target.value;
+            let payload_size = payload.byteLength;
+            let t_now = Date.now() / 1000;
+            
+            if (payload_size !== 24) {
+                console.log(`Wrong payload size of: ${payload_size} bytes`);
+            }
+
+            const view = new DataView(payload.buffer);
+            const gx_read = view.getInt16(0, true) / 1000;
+            const gy_read = view.getInt16(2, true) / 1000;
+            const gz_read = view.getInt16(4, true) / 1000;
+
+            gx_values.push(gx_read);
+            gy_values.push(gy_read);
+            gz_values.push(gz_read);
+            
+            const tgf_read = Math.sqrt(gx_read ** 2 + gy_read ** 2 + gz_read ** 2);
+            tGf.push(tgf_read);
+            t_values.push(t_now - t_0);
+        }
+
+        function disconnect() {
+            console.log('Disconnecting...');
+            console.log(`Received ${t_values.length} data points`);
+            
+            if (device && device.gatt.connected) {
+                device.gatt.disconnect();
+            }
+            
+            // Update plot with recorded data
+            source_1.data.x = t_values;
+            source_1.data.y = tGf;
+            source_1.change.emit();
+
+            // Update UI
+            updateConnectionStatus(false);
+            updateButtonStates(false);
+            showToast(`Recording stopped. ${t_values.length} data points captured`, 'success');
+        }
+
+        function onDisconnected() {
+            console.log('Device disconnected');
+            updateConnectionStatus(false);
+            updateButtonStates(false);
+            showToast('Device disconnected', 'warning');
+        }
+
+        // ==================== DATA EXPORT ====================
+        function saveToCSV(filename) {
+            if (t_values.length === 0) {
+                showToast('No data to download', 'warning');
+                return;
+            }
+
+            const csvContent = `time,gx,gy,gz,tGf\n` +
+                t_values.map((_, i) => `${t_values[i]},${gy_values[i]},${gx_values[i]},${gz_values[i]},${tGf[i]}`).join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+            
+            showToast('Data downloaded successfully', 'success');
+        }
+
+        // ==================== API COMMUNICATION ====================
+        async function sendData() {
+            if (t_values.length === 0) {
+                showToast('No data to analyze', 'warning');
+                return;
+            }
+
+            try {
+                // Show loading indicator
+                const loadingIndicator = document.getElementById('loadingIndicator');
+                const uploadBtn = document.getElementById('uploadBtn');
+                loadingIndicator.style.display = 'flex';
+                uploadBtn.disabled = true;
+                
+                showToast('Uploading data for analysis...', 'info');
+
+                // Define the API endpoint URL
+                const apiUrl = 'https://nj8zq5nvl6.execute-api.us-east-1.amazonaws.com/prod';
+
+                // Create a JSON payload with the 3 named arrays
+                const payload = {
+                    t_values: t_values,
+                    gy_values: gx_values,
+                    gz_values: gz_values
+                };
+
+                // Make a POST request to the API endpoint
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                // Get the response data as JSON
+                const data = await response.json();
+
+                // Save the response data into new named arrays
+                const t_rel = data.t_rel;
+                const f_1 = data.f_1;
+                const f_2 = data.f_2;
+                const f_3 = data.f_3;
+                const features = data.features;
+
+                // Log the results
+                console.log('Response arrays:');
+                console.log('t_rel:', t_rel);
+                console.log('f_1:', f_1);
+                console.log('f_2:', f_2);
+                console.log('f_3:', f_3);
+                console.log('features:', features);
+
+                // Update plot with analysis results
+                source_2.data.x = t_rel;
+                source_2.data.y = f_1;
+                source_2.data.y_1 = f_2;
+                source_2.data.y_2 = f_3;
+                source_2.change.emit();
+
+                // Show analysis card
+                document.getElementById('analysisCard').style.display = 'block';
+
+                // Process and display workout summary
+                if (features && features.length > 0) {
+                    const typeCounts = {};
+                    features.forEach((feature) => {
+                        if (typeCounts[feature.type]) {
+                            typeCounts[feature.type]++;
+                        } else {
+                            typeCounts[feature.type] = 1;
+                        }
+                    });
+
+                    // Create the summary HTML with better formatting
+                    let summaryHTML = '<div class="summary-items">';
+                    Object.keys(typeCounts).forEach((typeValue) => {
+                        summaryHTML += `
+                            <div class="summary-item">
+                                <span class="summary-type">${typeValue}</span>
+                                <span class="summary-count">${typeCounts[typeValue]}</span>
+                            </div>
+                        `;
+                    });
+                    summaryHTML += '</div>';
+
+                    // Display the summary
+                    document.getElementById('summary').innerHTML = summaryHTML;
+                    document.getElementById('summaryCard').style.display = 'block';
+                    
+                    const totalReps = Object.values(typeCounts).reduce((a, b) => a + b, 0);
+                    showToast(`Analysis complete! ${totalReps} reps detected`, 'success');
+                } else {
+                    showToast('Analysis complete, but no movements detected', 'warning');
+                }
+
+                // Hide loading indicator
+                loadingIndicator.style.display = 'none';
+                uploadBtn.disabled = false;
+
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Failed to analyze data', 'error');
+                document.getElementById('loadingIndicator').style.display = 'none';
+                document.getElementById('uploadBtn').disabled = false;
+            }
+        }
+
+        // ==================== SERVICE WORKER ====================
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('Service worker registered:', registration);
+                })
+                .catch(error => {
+                    console.error('Service worker registration failed:', error);
+                });
+        }
+
+        // ==================== INITIALIZE ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            updateButtonStates(false);
+            console.log('KTBL Tracker initialized');
+        });
+    </script>
 </body>
-
 </html>
-
