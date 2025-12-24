@@ -4,7 +4,7 @@ This repo contains interface for KTBL project (https://github.com/AndyShor/ktbl)
 based on web bluetooth technology.
 The interface is available at https://andyshor.github.io/ktbl_app/
 It looks like the following on the mobile device
-![interface](/assets/img/PWA_screenshot.png)
+![interface](/assets/img/PWA_screenshot.jpg)
 Press "Start recording button" with ktbl device powered on
 Pair device by Bluetooth when prompted, see connection established
 Record exercise, there is no real time updates.
