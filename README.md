@@ -1,3 +1,7 @@
+
+
+
+
 # ktbl_app
 
 This repo contains interface for KTBL project (https://github.com/AndyShor/ktbl)
@@ -20,3 +24,6 @@ It will show graps of the move similarities and summarize the counted reps.
 The interface is Progressive Web Application (PWA) and can be installed on home screen of mobile devices
 (both Android and iOS). 
 
+Performance demo with old UI
+
+https://github.com/user-attachments/assets/6c3eeea0-3ee0-42d3-a4bd-ad63b5761b43
